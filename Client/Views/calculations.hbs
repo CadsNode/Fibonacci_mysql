@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="css/Homepage/jquery-ui.css">
+  <link rel="stylesheet" href="css/Homepage/bootstrap.min.css">
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+
+input[type=submit] {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
+
+input[type=submit]:hover {
+  background-color: #9adefd;
+}
+
+.container {
+  /*border-radius: 5px;*/
+  width: 100%;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+.col-25 {
+  float: left;
+  width: 23%;
+  margin-top: 6px;
+}
+
+.col-75 {
+  float: left;
+  width: 75%;
+  margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.btn:first-child:not(:last-child) {
+  -webkit-border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  -ms-border-radius: 0 !important;
+  border-radius: 0 !important; }
+
+.btn, .btn-primary, .btn-default {
+  -webkit-border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  -ms-border-radius: 0 !important;
+  border-radius: 0 !important;}
+
+/*.col-75{
+  margin-left: 2px;
+}*/
+
+.space{
+  margin-left: 5px;
+}
+
+.workspace_btn {
+  -webkit-border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  -ms-border-radius: 0 !important;
+  border-radius: 0 !important;
+  background-color: #000000;
+  color: #ffffff;
+  border-style: none;
+  white-space: normal;
+  padding: 2px;
+  font-size: 14pt; 
+  margin-right: 2px;
+
+}
+
+.workspace_btn:hover, .workspace_btn:active, .workspace_btn_clicked {
+  background-color: #9adefd;
+  color: #222222; }
+
+
+#user_id{
+  width: 10%;
+  margin-top: 5px;
+  margin-left: 10px;
+  height: 5px;
+}
+
+.grid-container {
+        margin-top: 2%;
+        display: grid;
+        width:420px;
+        grid-template-columns: auto auto auto;
+        background-color: #e9ebee;
+    }
+    .grid-item {
+        background-color: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgb(200, 202, 206);
+        padding: 1px;
+        font-size: 17px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+.accentColor {
+  background-color: #FF0000;
+  color: white;
+  border-color: #158098; 
+  margin-left: 5px;
+}
+
+
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .col-25, .col-75, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+  }
+}
+</style>
+</head>
+<body>
+
+<h2 class="space">Welcome {{first_name}}</h2>
+<p class="space">Enter a value to get the Fibonacci equivalent.</p>
+<button class="space" id="link_log_out">Logout</button>
+<button class="space" id="link_delete_acc">Delete Account</button><br>
+<div>
+  <label class="space">Username:</label>
+  <input  type="text" name="user_id" id="user_id" value={{username}}>
+</div>
+
+
+<hr>
+
+<div class="container">
+
+  <!-- <form action="/action_page.php"> -->
+  <div class="row">
+    <div class="col-25 btn btn-default btn-block workspace_btn" id="post" onclick="post();"><b>Calculate</b></div>
+    <div class="col-75">
+      <input type="text" id="value" name="value" placeholder="Input your value..">
+    </div>
+  </div>  
+  <div class="row">
+    <div class="col-25"></div>
+    <div class="col-75">
+      <pre id="output" name="output" style="height:200px;background-color: black;color:white;"></pre>   
+    </div>
+  </div>
+  <div class="grid-container">
+    <div class="grid-item">Verdict</div>
+    <div class="grid-item">Time</div>
+    <div class="grid-item">Memory</div>  
+    <div class="grid-item" id="ver">.</div>
+    <div class="grid-item" id="tim">.</div>
+    <div class="grid-item" id="mem">.</div>  
+  </div>
+</div>
+
+<div class="col-25 btn btn-default btn-block workspace_btn accentColor" id="post" onclick="getHistory();"><b>Search History</b></div>
+
+</body>
+
+<script src="js/Homepage/jquery-2.2.4.min.js"></script>
+<script src="js/Homepage/jquery-ui.min.js"></script>
+<script src="js/server_url.js"></script>
+<script src="js/Calculations/calculate.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/Calculations/searchHistory.js" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+  $("#link_log_out").click(function(){
+    _sendLogOutRequest();
+  });
+
+  $("#link_delete_acc").click(function(){
+    _sendDeleteAccountRequest();
+  });
+
+
+var _sendLogOutRequest = function(){
+  $.ajax({
+    url: server_url + "/logOut",
+    type: "GET",
+    error: function(jqXHR, status, error){
+            console.log("Log out failed ", error);
+      alert("Log out failed :-(");
+    },
+    success: function(){
+      window.location.href = "/";
+    }
+  });
+}
+
+var _sendDeleteAccountRequest = function(){
+  $.ajax({
+    url: server_url + "/deleteAcc",
+    type: "GET",
+    error: function(jqXHR, status, error){
+            console.log("Delete Account failed ", error);
+      alert("Delete Account failed :-(");
+    },
+    success: function(){
+      alert("Account sucessfully deleted.");
+      window.location.href = "/";
+    }
+  });
+}
+
+
+
+///////
+});
+
+</script>
+
+
+</html>

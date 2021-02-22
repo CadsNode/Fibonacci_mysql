@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto;
+  background-color: #e9ebee;
+  padding: 3px;
+  width:1200px;
+  margin-top: 1%;
+  margin-left: 5.5%;
+}
+.grid-item {
+  background-color: #def;
+  border: 1px solid rgb(200, 202, 206);
+  padding: 5px;
+  font-size: 14px;
+  text-align: center;
+  font-weight: bold;
+}
+</style>
+</head>
+<body>
+
+<div class="grid-container ">
+  <div class="grid-item">#</div>
+  <div class="grid-item">Input Value</div>
+  <div class="grid-item">Output Value</div>
+  <div class="grid-item">When</div>   
+  <div class="grid-item">Verdict</div>
+  <div class="grid-item">Time</div>
+
+{{#if strcodes}}
+    {{#each strcodes}}
+    <div class="grid-item" style="font-weight: lighter;"><a  onclick="document.getElementById({{this.id}}).style.display='block'"  style="color: blue;text-decoration: underline;cursor: pointer;">{{this.id}}</a></div>
+    <div class="grid-item">{{this.input}}</div>
+    <div class="grid-item">{{this.output}}</div>
+    <div class="grid-item" style="font-weight: normal;">{{this.creation}}</div>    
+    {{#ifCond this.verdict "Accepted"}}
+      <div class="grid-item" style="color: green;">{{this.verdict}}</div>  
+    {{else}}
+     <div class="grid-item" style="color: red;">{{this.verdict}}</div>
+    {{/ifCond}}
+    <div class="grid-item" style="font-weight: normal;">{{this.execution_time}} ms</div>    
+    {{/each}}
+{{else}}
+    <p><em>You haven't made any submissions yet.</em></p>
+{{/if}}
+</div>
+</body>
+</html>

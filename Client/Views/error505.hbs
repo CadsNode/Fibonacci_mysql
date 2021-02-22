@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="eng">
+	<head>
+		<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;900&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/4b9ba14b0f.js" crossorigin="anonymous"></script>
+        <style type="text/css">
+            body {
+              background-color: black;
+            }
+
+            .mainbox {
+              background-color: black;
+              margin: auto;
+              height: 600px;
+              width: 600px;
+              position: relative;
+            }
+
+              .err {
+                color: white;
+                font-family: 'Nunito Sans', sans-serif;
+                font-size: 11rem;
+                position:absolute;
+                left: 20%;
+                top: 8%;
+              }
+
+            .far {
+              position: absolute;
+              font-size: 8.5rem;
+              left: 42%;
+              top: 15%;
+              color: white;
+            }
+
+             .err2 {
+                color: white;
+                font-family: 'Nunito Sans', sans-serif;
+                font-size: 11rem;
+                position:absolute;
+                left: 68%;
+                top: 8%;
+              }
+
+            .msg {
+                text-align: center;
+                font-family: 'Nunito Sans', sans-serif;
+                font-size: 1.6rem;
+                position:absolute;
+                left: 16%;
+                top: 45%;
+                width: 75%;
+                color: white;
+              }
+
+            a {
+              text-decoration: none;
+              color: #95c2de;
+            }
+
+            a:hover {
+              text-decoration: underline;
+            }
+        </style>
+	</head>
+	<body>
+       <div class="mainbox">
+            <div class="err">4</div>
+            <i class="far fa-question-circle fa-spin"></i>
+            <div class="err2">4</div>
+            <div class="msg">We are sorry for the inconvenience, there seems to be a problem with our servers. <p>Press <a href="/">home</a> button to be redirected to the Home Page.</p></div>
+      </div>
+    </body>
+    <script src ="js/handlebars-v4.0.5.js"></script>
+    <script src="js/jquery-2.2.4.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>    
+    <script src="js/server_url.js"></script>
+    <script src="js/loggedOut.js"></script>
+</html>
